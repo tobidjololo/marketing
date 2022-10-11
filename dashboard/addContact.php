@@ -69,8 +69,8 @@
                     </div>
                     
                     <div class="col-md-6">
-                        <label for="inputPassword5" class="form-label">Telephone du contact</label>
-                        <input minlength="3" type="tel" required pattern="[5-9]{2}[0-9]{6}" class="form-control" id="telephone" name="telephone">
+                        <label for="inputPassword5" class="form-label">Telephone du contact(<span style="color: red;">Mettez l'indicatif du pays</span>)</label>
+                        <input minlength="3" type="tel" required class="form-control" id="telephone" name="telephone">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Ajouter un contact</button>

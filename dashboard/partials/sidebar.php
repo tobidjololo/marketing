@@ -1,4 +1,4 @@
-<aside id="sidebar" class="sidebar">
+<aside id="sidebar" class="sidebar" style="background-color: #001933">
     <ul class="sidebar-nav" id="sidebar-nav">
       <br>
 
@@ -14,12 +14,12 @@
             </a>
             <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="#">
+                    <a href="singlesend.php">
                     <i class="bi bi-circle"></i><span>Envoie unique</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="multiplesend.php">
                     <i class="bi bi-circle"></i><span>Envoie multiple</span>
                     </a>
                 </li>
@@ -27,12 +27,12 @@
         </li>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav2" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-menu-button-wide"></i><span>Mes contacts</span><i class="bi bi-chevron-down ms-auto"></i>
+            <i class="bi bi-person"></i><span>Contacts</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav2" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="showContacts.php">
-                    <i class="bi bi-circle"></i><span>Voir mes contacts</span>
+                    <i class="bi bi-circle  fa fa-address-book-io"></i><span>Voir mes contacts</span>
                     </a>
                 </li>
                 <li>
@@ -43,16 +43,17 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav3" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-menu-button-wide"></i><span>Nos packs</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link collapsed" id="recherche" href="pack.php">
+            <i class="bi bi-person"></i>
+            <span>Recharger votre compte</span>
             </a>
-            <ul id="components-nav3" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="pack.php">
-                    <i class="bi bi-circle"></i><span>Voir nos packs</span>
-                    </a>
-                </li>
-            </ul>
+        </li>
+        <br><br>
+        <li class="nav-item">
+            <a class="nav-link collapsed" id="recherche" href="singlesend.php">
+            <i class="bi bi-person"></i>
+            <span>Envoyer un message rapide</span>
+            </a>
         </li>
     </ul>
 </aside><!-- End Sidebar-->

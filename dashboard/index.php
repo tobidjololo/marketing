@@ -1,16 +1,15 @@
 <?php
     include('../class/session.php');
     include('../class/User.php');
-	if(Session::checkSession())
+	  if(Session::checkSession())
     {
         include('partials/header.php');    
         include('partials/sidebar.php');
     } else {
         header("Location: ../connexion.php");
     }
-    
 ?>
-    <main id="main" class="main" style="background-image: url('assets/img/news-5.jpga');background-size: cover;background-repeat: no-repeat;">
+    <main id="main" class="main" style="background-image: url('assets/img/news-5.jpga');background-size: cover;background-repeat: no-repeat;background-color:gre;">
         <div class="pagetitle">
           <h1>Tableau de bord</h1>
           <nav>
@@ -69,8 +68,13 @@
                             <i style="color: rgb(180, 196, 44)" class="bi bi-bank"></i>
                         </div>
                         <div class="ps-3">
-                          <h6 style="color: rgb(255, 255, 255)"><?php     print_r(Session::get('user')[0]["credits_restants"]); ?></h6>
-                          <span style="color: rgb(255, 255, 255)" class="pt-1 fw-bold"><?php     echo(Session::get('user')["credits_restants"]); ?></span>
+                          <h6 style="color: rgb(255, 255, 255)">
+                            <?php
+                              $nbr = $user->nbrPack('User',Session::get('user')[0]["id"],'id');
+                              echo($nbr['credits_restants']); 
+                            ?>
+                          </h6>
+                          <span style="color: rgb(255, 255, 255)" class="pt-1 fw-bold"><?php     echo($nbr['credits_restants']); ?></span>
                           <span style="color: rgb(255, 255, 255)" class="pt-2 ps-1">
                             restant(s)
                           </span>
@@ -140,7 +144,7 @@
                                         <td><?php echo $a++ ?></td>
                                         <td><?php echo $element['recepteur'] ?></td>
                                         <td><?php echo  $element['expediteur'] ?></td>
-                                        <td><?php echo  $element['contenu'] ?></td>
+                                        <td><?php echo  substr($element['contenu'], 0,20) ?></td>
                                         <td><?php echo  $element['dateEnvoie'] ?></td>
                                     </tr>
                                     <?php

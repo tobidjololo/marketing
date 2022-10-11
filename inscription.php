@@ -3,7 +3,15 @@
 	include('class/User.php');
 	if(Session::checkSession())
     {
-		header("Location: dashboard/");
+		if(Session::get('user')[0]["status"] == 1){
+			if(Session::get('user')[0]["type"] == "user") {
+				header('Location: dashboard/');
+			} else {
+				header('Location: admin/');	
+			}
+		} else {
+			header('Location: verification.php/');
+		}
 	}
 
 	if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -25,9 +33,10 @@
 				Session::set('connect', True);
 				$_SESSION["id"] = $data2['id'];
 				Session::set('email', $_POST['email']);
+				Session::set('user', $data2);
 				if(Session::get('email'))
 				{
-					header('Location: dashboard/');
+					header('Location: verification.php');
 				}
 			}
 			else
@@ -69,7 +78,7 @@
 					</span>
 				</div>
 
-				<form class="login100-form validate-form" method="POST" action="inscription.php">
+				<form style="padding: 23px 40px 53px 14px;" class="login100-form validate-form" method="POST" action="inscription.php">
 					<?php
 						//definition des constantes pour le travail
 						if(isset($_GET['error1']))
@@ -86,45 +95,66 @@
 							<?php
 						}
 					?>
-					<div class="wrap-input100 validate-input m-b-26" data-validate="Le nom est obligatoire">
-						<span class="label-input100">Nom Prénoms</span>
-						<input class="input100" type="text" name="username" placeholder="Nom d'utilisateur">
-						<span class="focus-input100"></span>
+					<div class="row">
+						<div class="col-6">
+							<div class="wrap-input100 validate-input m-b-26" data-validate="Le nom est obligatoire">
+								<input class="input100" type="text" name="username" placeholder="Entrez votre nom">
+								<span class="focus-input100"></span>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="wrap-input100 validate-input m-b-26" data-validate="Le prénom est obligatoire">
+								<input class="input100" type="text" name="prenom" placeholder="Entrez votre prénom">
+								<span class="focus-input100"></span>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="wrap-input100 validate-input m-b-26" data-validate="L'adresse est obligatoire">
+								<input class="input100" type="text" name="adresse" placeholder="Entrez votre adresse">
+								<span class="focus-input100"></span>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="wrap-input100 validate-input m-b-26" data-validate="L'email est obligatoire">
+								<input class="input100" type="email" name="email" placeholder="Entrez votre Email">
+								<span class="focus-input100"></span>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="wrap-input100 validate-input m-b-26" data-validate="Le téléphone est obligatoire">
+								<input class="input100" type="email" name="telephone" placeholder="Entrez votre Téléphone">
+								<span class="focus-input100"></span>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="wrap-input100 validate-input m-b-18" data-validate = "Le mot de passe est obligatoire">
+								<input class="input100" type="password" name="password" placeholder="Entrez un mot de passe">
+								<span class="focus-input100"></span>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="wrap-input100 validate-input m-b-18" data-validate = "La confirmation est obligatoire">
+								<input class="input100" type="password" name="password1" placeholder="Confirmez votre mot de passe">
+								<span class="focus-input100"></span>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="wrap-input100 m-b-26">
+								<input class="input100" type="text" values="00000000" name="code" placeholder="Entrez le code parrain(facultatif)">
+								<span class="focus-input100"></span>
+							</div>
+						</div>
 					</div>
-					<div class="wrap-input100 validate-input m-b-26" data-validate="L'email est obligatoire">
-						<span class="label-input100">Email</span>
-						<input class="input100" type="email" name="email" placeholder="Entrez votre Email">
-						<span class="focus-input100"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input m-b-18" data-validate = "Le mot de passe est obligatoire">
-						<span class="label-input100">Mot de passe</span>
-						<input class="input100" type="password" name="password" placeholder="Entrez un mot de passe">
-						<span class="focus-input100"></span>
-					</div>
-					<div class="wrap-input100 validate-input m-b-18" data-validate = "La confirmation est obligatoire">
-						<span class="label-input100">Confirmer mot de passe</span>
-						<input class="input100" type="password" name="password1" placeholder="Confirmez votre mot de passe">
-						<span class="focus-input100"></span>
-					</div>
-
-					<div class="wrap-input100 m-b-26">
-						<span class="label-input100">Code parrain
-							(facultatif)</span>
-						<input class="input100" type="text" value="00000000" name="code" placeholder="Entrez le code parrain(facultatif)">
-						<span class="focus-input100"></span>
-					</div>
-					
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Inscription
-						</button>
-                        <span>
-                            Vous avez déjà de compte.
-                            <br>
-                            <a href="connexion.php">Alors connectez vous.</a>
-                        </span>
-					</div>
+						<div class="container-login100-form-btn">
+							<button class="login100-form-btn" style="text-align: center;">
+								Inscription
+							</button>
+							<span>
+								Vous avez déjà de compte.
+								<br>
+								<a href="connexion.php">Alors connectez vous.</a>
+							</span>
+						</div>
 				</form>
 			</div>
 		</div>
@@ -146,6 +176,16 @@
 	<script src="assets/vendor/countdowntime/countdowntime.js"></script>
 
 	<script src="assets/js/main1.js"></script>
-
+	<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/633303e454f06e12d897243f/1gdvkednq';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
 </body>
 </html>

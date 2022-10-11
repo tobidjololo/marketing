@@ -70,7 +70,8 @@
             $table = Database::clear($table);
             $key = Database::clear($key);
             $value = Database::clear($value);
-            $sql = "Delete * from " . $table . " where ".$key."='".$value."' "; 
+            $sql = "Delete from " . $table . " where ".$key."=".$value.""; 
+            echo $sql;
 			$request = $this->_db->prepare($sql);
 			$content = $request->execute();
             return $content;
@@ -94,7 +95,17 @@
 		{
             $value21 = sha1($value2);
 			$sql = "Select email,count(*) as nbr from " . $table . " where ".$key1."='".$value1."' And " .$key2."='".$value21."'"; 
-			//echo $sql;
+			echo $sql;
+            $request = $this->_db->prepare($sql);
+			$request->execute();
+            
+			return $request->fetch(PDO::FETCH_ASSOC);
+		}
+
+        public function findByTwoCode(string $key1, string $value1, string $key2, string $value2, string $table)
+		{
+			$sql = "Select email,count(*) as nbr from " . $table . " where ".$key1."='".$value1."' And " .$key2."='".$value2."'"; 
+			echo $sql;
             $request = $this->_db->prepare($sql);
 			$request->execute();
             

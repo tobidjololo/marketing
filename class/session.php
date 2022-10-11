@@ -43,7 +43,7 @@ class Session
     public static function checkSession()
     {
         self::init();
-        if(self::get("connect") == false)
+        if(self::get("connect") == 0)
         {
             return false;
             self::destroy();

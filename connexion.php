@@ -4,35 +4,49 @@
 
 	if(Session::checkSession())
     {
-		header("Location: dashboard/");
+		if(Session::get('user')[0]["status"] != 0){
+			if(Session::get('user')[0]["type"] == "user") {
+				header('Location: dashboard/');
+			} else {
+				header('Location: admin/');	
+			}
+		} else {
+			header('Location: verification.php');
+		}
 	}
 
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-        //Appeler la méthode statique de la classe session qui lance les sessions
         Session::init();
 
-        //Appeler la méthode de connexion à la BD
         $db = Database::connect();
         
-        //Créer une instance de la classe utilisateur
         $user = new User();
        
-        //Appele de la méthode pour rechercher l'utilisateur en BD
         $data = $user->findByTwo('email',$_POST['email'],'password',$_POST['password'],'User');
 
-        //Vérifier si il a pu trouver un utilisateur avec ces données
         if($data['nbr'] == 1)
         {
-			echo('ee');
             $data2 = $user->selectAllByElement('email',$_POST['email'],'User');
+			
             Session::set('connect', True);
-            $_SESSION["id"] = $data2['id'];
-            Session::set('email', $_POST['email']);
+            $_SESSION["id"] = $data2['0']['id'];
+			Session::set('email', $_POST['email']);
 			Session::set('user', $data2);
             if(Session::get('email'))
             {
-                header('Location: dashboard/');
-            }
+				die();
+				if(Session::get('user')[0]["status"] != 0){
+					if(Session::get('user')[0]["type"] == "user") {
+						header('Location: dashboard/');
+					} else {
+						header('Location: admin/');	
+					}
+				} else {
+					header('Location: verification.php');
+				}
+            } else {
+				header('Location: connexion.php?error2=s');
+			}
         }
         else
         {
@@ -105,16 +119,22 @@
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn text-center">
 							connexion
 						</button>
-                        <span>
-                            Vous n'avez pas de compte.
-                            <br>
-                            <a href="inscription.php">Alors inscrivez-vous.</a>
-                        </span>
-					</div>
+						</div>
+						<br>
+                        <div>
+                            Pas encore de compte !
+							<a class="" href="inscription.php">
+								<h4 style="color:blue;">
+									Inscrivez-vous.
+								</h4>
+							</a>
+						</div>
+					
 				</form>
+				
 			</div>
 		</div>
 	</div>
@@ -135,6 +155,17 @@
 	<script src="assets/vendor/countdowntime/countdowntime.js"></script>
 
 	<script src="assets/js/main1.js"></script>
+	<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/633303e454f06e12d897243f/1gdvkednq';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
 
 </body>
 </html>
